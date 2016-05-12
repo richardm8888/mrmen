@@ -11,6 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@home');
+
+Route::get('books', 'BooksController@index');
+
+Route::match(['get','post'], 'books/{id}', 'BooksController@book')->name('viewbook');
+
+Route::post('books', 'BooksController@review')->name('reviewbook');
