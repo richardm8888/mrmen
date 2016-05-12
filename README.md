@@ -2,6 +2,8 @@
 
 A working version of this website prototype can be found at [http://moss-development.co.uk/mrmen](http://moss-development.co.uk/mrmen.)
 
+## Installation Instructions
+
 ###### Install Node JS
 `sudo apt-get install -y nodejs npm`
 
@@ -28,3 +30,5 @@ cd mrmen
 ###### Change permissions on storage directory
 `chmod -R 755 storage`
 
+###### Run changescript on MySQL DB server
+/sql/changescript.sql
