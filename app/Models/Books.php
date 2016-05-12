@@ -95,6 +95,8 @@ class Books
 
 		$review = DB::insert($sql, [$bookid, $email, $review]);
 
+		Cache::forget('reviews_' . $bookid);
+
 		return $review;
 	}
 
