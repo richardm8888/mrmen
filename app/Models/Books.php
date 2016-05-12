@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use DB;
+use Cache;
 
 class Books 
 {
@@ -13,13 +14,19 @@ class Books
          */
 	public function getBooks() 
 	{
-		$sql = "
-	            SELECT  *
-	            FROM    books
-	            ORDER BY bookname ASC
-	        ";
+		$books = Cache::get('books', function() {
+			$sql = "
+		            SELECT  *
+		            FROM    books
+		            ORDER BY bookname ASC
+		        ";
 
-	        $books = DB::select($sql);
+		        $books = DB::select($sql);
+
+		        Cache::put('books', $books, 240);
+
+		        return $books;
+		});
 		
 		return $books;
 	}
@@ -37,15 +44,21 @@ class Books
 			return false;
 		}
 
-		$sql = "
-	            SELECT  *
-	            FROM    books
-	            WHERE   bookurl = ?
-	        ";
+		$book = Cache::get('book_' . $url, function() use ($url) {
+			$sql = "
+		            SELECT  *
+		            FROM    books
+		            WHERE   bookurl = ?
+		        ";
 
-	        $book = DB::select($sql, [$url]);
+		        $book = DB::select($sql, [$url]);
 
-	        return $book[0];
+		        Cache::put('book_' . $url, $book[0], 240);
+
+		        return $book[0];
+		});
+
+	        return $book;
 	}
 
 	/**
@@ -98,13 +111,19 @@ class Books
 			return false;
 		}
 
-		$sql = "
-	            SELECT  *
-	            FROM    bookreviews
-	            WHERE   bookid = ?
-	        ";
+		$reviews = Cache::get('reviews_' . $bookid, function() use ($bookid) {
+			$sql = "
+		            SELECT  *
+		            FROM    bookreviews
+		            WHERE   bookid = ?
+		        ";
 
-	        $reviews = DB::select($sql, [$bookid]);
+		        $reviews = DB::select($sql, [$bookid]);
+
+		        Cache::put('reviews_' . $bookid, $reviews, 240);
+
+		        return $reviews;
+	       });
 
 	        return $reviews;
 	}
