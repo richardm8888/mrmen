@@ -1,6 +1,6 @@
 # Mr Men Book Website
 
-A working version of this website prototype can be found at [http://moss-development.co.uk/mrmen](http://moss-development.co.uk/mrmen.)
+A working version of this website prototype can be found at [http://mrmen.moss-development.co.uk](http://mrmen.moss-development.co.uk.)
 
 ## Installation Instructions
 
